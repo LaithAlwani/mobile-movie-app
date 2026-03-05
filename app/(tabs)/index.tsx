@@ -17,7 +17,7 @@ const index = () => {
     error: moviesError,
   } = useFetch(() =>
     fetchMovies({
-      query: "",
+      query: 'kenshin',
     }),
   );
 
