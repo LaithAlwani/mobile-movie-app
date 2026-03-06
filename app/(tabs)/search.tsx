@@ -2,8 +2,10 @@ import MovieCard from "@/components/MovieCard";
 import SearchBar from "@/components/SearchBar";
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
+import { api } from "@/convex/_generated/api";
 import { fetchMovies } from "@/services/api";
 import useFetch from "@/services/useFetch";
+import { useMutation } from "convex/react";
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, Image, StyleSheet, Text, View } from "react-native";
 
@@ -23,14 +25,28 @@ const search = () => {
     false,
   );
 
+  const updateSearchCount = useMutation(api.metrics.updateSearchCount);
+
   useEffect(() => {
     const timedRequest = setTimeout(async () => {
       if (searchQuery.trim()) {
-        await loadMovies();
+        const data = await loadMovies();
+        console.log(data?.[0]);
+
+        if (data?.length > 0 && data?.[0]) {
+          await updateSearchCount({
+            searchTerm: searchQuery.trim(),
+            movie: {
+              id: movies[0].id,
+              title: movies[0].title,
+              poster_path: movies[0].poster_path,
+            },
+          });
+        }
       } else {
         reset();
       }
-    }, 500);
+    }, 1000);
     return () => clearTimeout(timedRequest);
   }, [searchQuery]);
 
