@@ -7,9 +7,14 @@ import { useRouter } from "expo-router";
 import useFetch from "@/services/useFetch";
 import { fetchMovies } from "@/services/api";
 import MovieCard from "@/components/MovieCard";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import TrendingCard from "@/components/TrendingCard";
 
 const index = () => {
   const router = useRouter();
+
+  const trendingMovies = useQuery(api.metrics.getTrendingMovies);
 
   const {
     data: movies,
@@ -33,18 +38,27 @@ const index = () => {
           paddingBottom: 10,
         }}>
         <Image source={icons.logo} className="w-12 h-10 mt-20 mb-5 mx-auto" />
-        {moviesLoding ? (
+        {moviesLoding || !trendingMovies ? (
           <ActivityIndicator size="large" color="#0000ff" className="mt-10 self-center" />
         ) : moviesError ? (
           <Text>{moviesError?.message}</Text>
         ) : (
           <View className="flex-1 mt-5">
-            <SearchBar
-              onPress={() => router.push("/search")}
-              placeholder="search for a movie"
-              value=""
-              onChangeText={() => {}}
-            />
+            <SearchBar onPress={() => router.push("/search")} placeholder="search for a movie" />
+            {trendingMovies.length>0 && (
+              <View>
+                <Text className="text-lg text-white font-bold mt-5 mb-3">Trending Movies</Text>
+                <FlatList
+                  className="mb-4 mt-3"
+                  data={trendingMovies}
+                      renderItem={({ item, index }) => <TrendingCard movie={{...item, movie_id: Number(item.movie_id), count: item.count ?? 0}} index={index}/>}
+                  keyExtractor={(item) => item.movie_id}
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  ItemSeparatorComponent={() => <View className="w-4" />}
+                />
+              </View>
+            )}
             <>
               <Text className="text-lg text-white font-bold mt-5 mb-3">Lates Movies</Text>
               <FlatList

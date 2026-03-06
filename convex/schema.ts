@@ -9,5 +9,7 @@ export default defineSchema({
     poster_url: v.string(),
     movie_id: v.string(),
     title: v.string(),
-  }).index("by_search_term", ["searchTerm"]),
+  })
+  .index("by_count", ["count"])
+  .index("by_searchTerm", ["searchTerm"]),
 });

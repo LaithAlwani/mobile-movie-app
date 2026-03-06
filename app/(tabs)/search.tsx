@@ -29,26 +29,24 @@ const search = () => {
 
   useEffect(() => {
     const timedRequest = setTimeout(async () => {
-      if (searchQuery.trim()) {
-        const data = await loadMovies();
-        console.log(data?.[0]);
-
-        if (data?.length > 0 && data?.[0]) {
-          await updateSearchCount({
-            searchTerm: searchQuery.trim(),
-            movie: {
-              id: movies[0].id,
-              title: movies[0].title,
-              poster_path: movies[0].poster_path,
-            },
-          });
-        }
-      } else {
-        reset();
-      }
+      if (searchQuery.trim() && searchQuery.trim().length >=3) await loadMovies();
+       else reset()
     }, 1000);
     return () => clearTimeout(timedRequest);
   }, [searchQuery]);
+
+  useEffect(() => {
+    if (movies?.length > 0 && movies?.[0]) {
+      updateSearchCount({
+        searchTerm: searchQuery.trim(),
+        movie: {
+          id: movies[0].id,
+          title: movies[0].title,
+          poster_path: movies[0].poster_path,
+        },
+      });
+    }
+  }, [movies, searchQuery, updateSearchCount]);
 
   return (
     <View className="flex-1 bg-primary">

@@ -1,4 +1,4 @@
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 
 export const updateSearchCount = mutation({
@@ -14,7 +14,7 @@ export const updateSearchCount = mutation({
   handler: async (ctx, { searchTerm, movie }) => {
     const existing = await ctx.db
       .query("metrics")
-      .withIndex("by_search_term", (q) => q.eq("searchTerm", searchTerm))
+      .withIndex("by_searchTerm", (q) => q.eq("searchTerm", searchTerm))
       .unique();
 
     if (existing) {
@@ -30,5 +30,15 @@ export const updateSearchCount = mutation({
         poster_url: movie.poster_path ?? "",
       });
     }
+  },
+});
+
+export const getTrendingMovies = query({
+  handler: async (ctx) => {
+    return await ctx.db
+      .query("metrics")
+      .withIndex("by_count")
+      .order("desc")
+      .take(5);
   },
 });
