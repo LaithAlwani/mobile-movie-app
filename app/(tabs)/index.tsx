@@ -17,7 +17,7 @@ const index = () => {
     error: moviesError,
   } = useFetch(() =>
     fetchMovies({
-      query: 'kenshin',
+      query: "",
     }),
   );
 
@@ -39,24 +39,30 @@ const index = () => {
           <Text>{moviesError?.message}</Text>
         ) : (
           <View className="flex-1 mt-5">
-                <SearchBar onPress={() => router.push("/search")} placeholder="search for a movie" />
-                <>
-                  <Text className="text-lg text-white font-bold mt-5 mb-3">Lates Movies</Text>
-                  <FlatList
-                    data={movies}
-                    renderItem={({ item }) => <MovieCard {...item} />}
-                    keyExtractor={(item) => item.id}
-                    numColumns={3}
-                    columnWrapperStyle={{
-                      justifyContent: 'flex-start',
-                      gap: 20,
-                      paddingRight: 5,
-                      marginBottom:10,
-                    }}
-                    className="mt-2 pb-32"
-                    scrollEnabled={false}
-                  />
-                </>
+            <SearchBar
+              onPress={() => router.push("/search")}
+              placeholder="search for a movie"
+              value=""
+              onChangeText={() => {}}
+            />
+            <>
+              <Text className="text-lg text-white font-bold mt-5 mb-3">Lates Movies</Text>
+              <FlatList
+                data={movies}
+                renderItem={({ item }) => <MovieCard {...item} />}
+                keyExtractor={(item) => item.id}
+                numColumns={3}
+                columnWrapperStyle={{
+                  justifyContent: "flex-start",
+                  gap: 16,
+                  // paddingRight: 5,
+                  marginVertical: 16,
+                  marginBottom: 10,
+                }}
+                className="mt-2 pb-32"
+                scrollEnabled={false}
+              />
+            </>
           </View>
         )}
       </ScrollView>
