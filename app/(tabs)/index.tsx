@@ -15,6 +15,9 @@ const index = () => {
   const router = useRouter();
 
   const trendingMovies = useQuery(api.metrics.getTrendingMovies);
+  const uniqueMovies = Array.from(
+  new Map(trendingMovies?.map((movie) => [movie.movie_id, movie])).values()
+);
 
   const {
     data: movies,
@@ -50,7 +53,7 @@ const index = () => {
                 <Text className="text-lg text-white font-bold mt-5 mb-3">Trending Movies</Text>
                 <FlatList
                   className="mb-4 mt-3"
-                  data={trendingMovies}
+                  data={uniqueMovies}
                       renderItem={({ item, index }) => <TrendingCard movie={{...item, movie_id: Number(item.movie_id), count: item.count ?? 0}} index={index}/>}
                   keyExtractor={(item) => item.movie_id}
                   horizontal

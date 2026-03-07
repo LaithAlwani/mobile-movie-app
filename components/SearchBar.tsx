@@ -1,4 +1,4 @@
-import { Image, StyleSheet, TextInput, View } from "react-native";
+import { Image, TextInput, View } from "react-native";
 import React from "react";
 import { icons } from "@/constants/icons";
 
@@ -26,5 +26,3 @@ const SearchBar = ({placeholder, onPress, value, onChangeText}:Props) => {
 };
 
 export default SearchBar;
-
-const styles = StyleSheet.create({});

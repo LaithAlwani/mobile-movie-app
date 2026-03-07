@@ -28,9 +28,10 @@ const search = () => {
   const updateSearchCount = useMutation(api.metrics.updateSearchCount);
 
   useEffect(() => {
+    console.log(searchQuery.length);
     const timedRequest = setTimeout(async () => {
-      if (searchQuery.trim() && searchQuery.trim().length >=3) await loadMovies();
-       else reset()
+      if (searchQuery.trim() && searchQuery.trim().length >= 3) await loadMovies();
+      else reset();
     }, 1000);
     return () => clearTimeout(timedRequest);
   }, [searchQuery]);
@@ -46,7 +47,7 @@ const search = () => {
         },
       });
     }
-  }, [movies, searchQuery, updateSearchCount]);
+  }, [movies]);
 
   return (
     <View className="flex-1 bg-primary">

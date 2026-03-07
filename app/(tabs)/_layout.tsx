@@ -45,6 +45,7 @@ const _layout = () => {
           borderWidth: 1,
           borderColor: "#0f0d23",
         },
+      
       }}>
       <Tabs.Screen
         name="index"
