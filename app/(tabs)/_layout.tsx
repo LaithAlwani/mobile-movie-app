@@ -3,13 +3,14 @@ import { images } from "@/constants/images";
 import { Tabs } from "expo-router";
 import React from "react";
 import { Image, ImageBackground, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const TabIcon = ({ focused, icon, title }: any) => {
   if (focused) {
     return (
       <ImageBackground
         source={images.highlight}
-        className="flex flex-row w-full flex-1 min-w-[112px] min-h-16 mt-4 justify-center items-center rounded-full overflow-hidden">
+        className="flex flex-row w-full flex-1 min-w-[112px] min-h-14 mt-5 justify-center items-center rounded-full overflow-hidden">
         <Image source={icon} tintColor="#151312" className="size-5" />
         <Text className="text-secondary text-base font-semibold ml-2">{title}</Text>
       </ImageBackground>
@@ -24,7 +25,9 @@ const TabIcon = ({ focused, icon, title }: any) => {
 };
 
 const _layout = () => {
+  const insets = useSafeAreaInsets();
   return (
+    
     <Tabs
       screenOptions={{
         tabBarShowLabel: false,
@@ -38,14 +41,13 @@ const _layout = () => {
           backgroundColor: "#0f0d23",
           borderRadius: 50,
           marginHorizontal: 20,
-          marginBottom: 36,
+          marginBottom: insets.bottom >40? 52:36,
           height: 52,
           position: "absolute",
           overflow: "hidden",
           borderWidth: 1,
           borderColor: "#0f0d23",
         },
-      
       }}>
       <Tabs.Screen
         name="index"
