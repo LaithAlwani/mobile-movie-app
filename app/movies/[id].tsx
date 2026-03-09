@@ -43,7 +43,7 @@ const Details = () => {
             resizeMode="stretch"
           />
 
-          <TouchableOpacity className="absolute bottom-5 right-5 rounded-full size-14 bg-white flex items-center justify-center">
+          <TouchableOpacity className="absolute -bottom-7 right-0 mx-5 rounded-full size-14 bg-white flex items-center justify-center">
             <Image source={icons.play} className="w-6 h-7 ml-1" resizeMode="stretch" />
           </TouchableOpacity>
         </View>
@@ -87,9 +87,9 @@ const Details = () => {
       </ScrollView>
 
       <TouchableOpacity
-        className="absolute w-16 h-16 top-10 left-0 mx-5 bg-accent rounded-full  flex flex-row items-center justify-center z-50"
+        className="absolute w-12 h-12 top-4 left-0 mx-5 bg-accent rounded-full flex flex-row items-center justify-center z-50"
         onPress={() => router.back()}>
-        <Image source={icons.arrow} className="size-6 mr-1 mt-0.5 rotate-180" tintColor="#fff" />
+        <Image source={icons.arrow} className="size-5 rotate-180" tintColor="#fff" />
         {/* <Text className="text-white font-semibold text-base">Go Back</Text> */}
       </TouchableOpacity>
     </View>
